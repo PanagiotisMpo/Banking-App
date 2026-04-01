@@ -1,22 +1,10 @@
 public class Main {
     public static void main(String[] args) {
-        Account account = new Account("panos", "GR16 0110 1250 0000 0001 2300 695", "ACC001", 1000, "4019");
-        try {
-            account.deposit("4019", 250);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-        try {
-            account.withdraw("4019", 500);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-        for(Transaction transaction : account.getTransactions())
-        {
-            System.out.println(transaction.getType() + " " + transaction.getAmount());
-
-        }
-
+        Bank bank = new Bank();
+        Account account1 = new Account("panos", "GR16 0110 1250 0000 0001 2300 695", "ACC001", 1000, "4019");
+        bank.addAccount(account1);
+        Account account2 = new Account("giorgos", "GR16 0110 1250 0000 0001 2300 696", "ACC002", 500, "4009");
+        bank.addAccount(account2);
     }
 
 }
