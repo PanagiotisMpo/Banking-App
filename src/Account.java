@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Account {
 
         private String accountHolder;
@@ -5,6 +7,7 @@ public class Account {
         private String accountId;
         private double balance;
         private String pin;
+        private ArrayList<Transaction> transactions;
 
         public Account(String accountHolder, String iban, String accountId, double balance, String pin)
         {
@@ -13,6 +16,8 @@ public class Account {
             this.accountId = accountId;
             this.balance = balance;
             this.pin = pin;
+            this.transactions = new ArrayList<>();
+
         }
 
         public String getAccountHolder()
@@ -35,14 +40,21 @@ public class Account {
             return balance;
         }
 
-        public void deposit(double amount)
+        public ArrayList<Transaction> getTransactions(){ return transactions; }
+
+        public void deposit(String inputPin, double amount)
         {
+            if(!validatePin(inputPin))
+            {
+                throw new IllegalArgumentException("Invalid Pin.");
+            }
             if(amount <= 0)
             {
                throw new IllegalArgumentException("Deposit amount must be greater than zero.");
             }
 
             balance += amount;
+            transactions.add(new Transaction("Deposit", amount));
         }
 
         public void withdraw(String inputPin, double amount)
@@ -61,6 +73,7 @@ public class Account {
             }
 
             balance -= amount;
+            transactions.add(new Transaction("Withdrawal", amount));
         }
 
         public boolean validatePin(String inputPin)
