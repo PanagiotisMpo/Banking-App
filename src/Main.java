@@ -1,13 +1,19 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+public class Main {
+    public static void main(String[] args) {
+        Account account =  new Account("panos", "GR16 0110 1250 0000 0001 2300 695", "ACC001", 1000, "4019");
+        try{
+            account.withdraw("0001", 250);
+        } catch(IllegalArgumentException  e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(account.getBalance());
+        try{
+            account.withdraw("4019", 250);
+        } catch(IllegalArgumentException  e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(account.getBalance());
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
     }
+
 }
