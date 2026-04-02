@@ -42,12 +42,8 @@ public class Account {
 
         public ArrayList<Transaction> getTransactions(){ return transactions; }
 
-        public void deposit(String inputPin, double amount)
+        public void deposit(double amount)
         {
-            if(!validatePin(inputPin))
-            {
-                throw new IllegalArgumentException("Invalid Pin.");
-            }
             if(amount <= 0)
             {
                throw new IllegalArgumentException("Deposit amount must be greater than zero.");
