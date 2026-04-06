@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bank {
+public class  Bank {
 
     private ArrayList<Account> accounts;
 
@@ -36,7 +36,15 @@ public class Bank {
         if(sender==null || receiver==null){
             throw new IllegalArgumentException("Invalid Account ID");
         }
-        sender.withdraw(inputPin, amount);
-        receiver.deposit(amount);
+        if(sender.validateWithdraw(inputPin,amount)){
+
+            /// Subtract amount from balance and add transaction in history
+            sender.subtractBalance(amount);
+            sender.addTransactionToHistory(TransactionType.TRANSFER_OUT, amount);
+            /// Add amount to balance and add transaction in history
+            receiver.addBalance(amount);
+            receiver.addTransactionToHistory(TransactionType.TRANSFER_IN, amount);
+
+        }
     }
 }

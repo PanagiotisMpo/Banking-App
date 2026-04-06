@@ -42,38 +42,45 @@ public class Account {
 
         public ArrayList<Transaction> getTransactions(){ return transactions; }
 
+        public boolean validatePin(String inputPin) {return pin.equals(inputPin);}
+
+        public void addBalance(double amount) { balance += amount;}
+
+        public void subtractBalance(double amount) {balance -= amount;}
+
         public void deposit(double amount)
         {
-            if(amount <= 0)
-            {
-               throw new IllegalArgumentException("Deposit amount must be greater than zero.");
-            }
-
             balance += amount;
-            transactions.add(new Transaction("Deposit", amount));
+            addTransactionToHistory(TransactionType.DEPOSIT, amount);
         }
 
         public void withdraw(String inputPin, double amount)
         {
-            if(!validatePin(inputPin))
-            {
-                throw new IllegalArgumentException("Invalid Pin.");
+            if(validateWithdraw(inputPin, amount)){
+                balance -= amount;
+                addTransactionToHistory(TransactionType.WITHDRAW, amount);
             }
-            if(amount <=0)
-            {
-                throw new IllegalArgumentException("Withdraw amount must be greater than zero.");
-            }
-            if(amount>balance)
-            {
-                throw new IllegalArgumentException("Insufficient balance.");
-            }
-
-            balance -= amount;
-            transactions.add(new Transaction("Withdrawal", amount));
         }
 
-        public boolean validatePin(String inputPin)
+        public void addTransactionToHistory(TransactionType transactionType, double amount)
         {
-            return pin.equals(inputPin);
+            transactions.add(new Transaction(transactionType, amount));
         }
+
+        public boolean validateWithdraw(String inputPin, double amount)
+        {
+            if(!validatePin(inputPin)){
+                throw new IllegalArgumentException("Invalid Pin");
+            }
+            if(amount > getBalance())
+            {
+                throw new IllegalArgumentException("Insufficient Balance");
+            }
+            if(amount <= 0)
+            {
+                throw new IllegalArgumentException("Amount must be greater than zero!");
+            }
+            return true;
+        }
+
 }
