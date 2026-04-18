@@ -1,3 +1,5 @@
+package domain;
+
 public enum TransactionType {
     DEPOSIT("Deposit "),
     WITHDRAW("Withdraw "),
