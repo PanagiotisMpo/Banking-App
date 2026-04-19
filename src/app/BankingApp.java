@@ -6,6 +6,7 @@ import exception.BankingException;
 import exception.InvalidAmountException;
 import service.BankingService;
 
+// Coordinates the console flow of the application after startup.
 public class BankingApp {
     private final BankingService bankingService;
     private final Console console;
@@ -16,7 +17,7 @@ public class BankingApp {
         this.loginService = loginService;
         this.bankingService = bankingService;
     }
-
+    // Starts the user interaction flow: login first, then one menu action.
     public void run() {
         LoginResult loginResult = loginService.login();
 
@@ -42,6 +43,7 @@ public class BankingApp {
         console.printMessage("6. Exit");
     }
 
+    // Routes the selected menu option to the matching use case.
     private void handleChoice(String choice, Account userAccount) {
         try {
             switch (choice) {
@@ -72,12 +74,14 @@ public class BankingApp {
     }
 
     private void showHistory(Account account) {
-        if (account.getTransactions().isEmpty()) {
+        java.util.List<Transaction> transactions = bankingService.getHistoryForAccount(account.getAccountId());
+
+        if (transactions.isEmpty()) {
             console.printMessage("No transactions found.");
             return;
         }
 
-        for (Transaction transaction : account.getTransactions()) {
+        for (Transaction transaction : transactions) {
             console.printMessage(transaction.toString());
         }
     }
@@ -111,6 +115,8 @@ public class BankingApp {
         console.printMessage("The new balance is: " + account.getBalance());
     }
 
+    // Reads numeric input and converts parsing problems into the same
+    // business exception flow used by the rest of the application.
     private double readAmount() {
         try {
             return Double.parseDouble(console.readLine());

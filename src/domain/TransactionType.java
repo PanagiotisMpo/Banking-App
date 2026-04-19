@@ -1,10 +1,9 @@
 package domain;
 
 public enum TransactionType {
-    DEPOSIT("Deposit "),
-    WITHDRAW("Withdraw "),
-    TRANSFER_IN("Transfer In "),
-    TRANSFER_OUT("Transfer Out ");
+    DEPOSIT("Deposit"),
+    WITHDRAW("Withdraw"),
+    TRANSFER("Transfer");
 
     private final String label;
 

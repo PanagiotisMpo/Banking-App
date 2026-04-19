@@ -3,6 +3,8 @@ package app;
 import domain.Account;
 import repository.AccountRepository;
 
+// Handles the login use case and returns an explicit result object
+// instead of exposing fragile null-based control flow to callers.
 public class LoginService {
     private final AccountRepository repository;
     private final Console console;
@@ -12,6 +14,8 @@ public class LoginService {
         this.console = console;
     }
 
+    // Performs the login use case and returns an explicit result object
+    // instead of exposing null-based flow to the caller.
     public LoginResult login() {
         console.printMessage("Enter account id");
         String userId = console.readLine();
